@@ -1,16 +1,32 @@
-# This is a sample Python script.
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from time import sleep
+from selenium.webdriver.support.ui import Select
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+driver = webdriver.Edge('C:/Selenium/edgedriver')
+driver.maximize_window()
+driver.delete_all_cookies()
+driver.get("https://www.amazon.com/")
+
+#codificación de casos de prueba
+
+barranav = driver.find_element(By.ID, "twotabsearchtextbox") #buscar la barra de navegación
+barranav.send_keys("HP Pavilion Azul.") #escribir lo solicitado
+barranav.send_keys("\n") #confirmar lo escrito con Enter
+sleep(1) #tiempo de espera
+
+driver.find_element(By.CSS_SELECTOR, ".s-main-slot .s-list-col-right h2 .a-link-normal").click() #dar click al primer producto que aparece
+sleep(1) #tiempo de espera
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+select = Select(driver.find_element(By.CSS_SELECTOR, '#desktop_qualifiedBuyBox select')) #buscar el selector de productos
+select.select_by_value("2") #cambiar a dos elementos seleccionados
 
+sleep(1) #tiempo de espera
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+driver.find_element(By.CSS_SELECTOR, "#desktop_qualifiedBuyBox #add-to-cart-button").click() #dar click a añadir al carrito
+sleep(1)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+driver.find_element(By.CSS_SELECTOR, "#nav-cart").click() #visualizar el carrito
+sleep(4.5)
+
